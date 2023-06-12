@@ -8,3 +8,6 @@
 
 ### Linter test:
 [![linter-check](https://github.com/VadimYaskiv/python-project-50/actions/workflows/linter.yml/badge.svg)](https://github.com/VadimYaskiv/python-project-50/actions/workflows/linter.yml)
+
+### asciinema. step 3. flat json files comparison
+<a href="https://asciinema.org/a/b1EXOJLv7i7ZoBE4mMWZ29ivQ" target="_blank"><img src="https://asciinema.org/a/b1EXOJLv7i7ZoBE4mMWZ29ivQ.svg" /></a>
