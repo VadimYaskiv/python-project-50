@@ -23,7 +23,6 @@ jobs:
           pip install poetry
           poetry lock --no-update
           make install
-          pip install pyyaml
       - name: Run linter and pytest
         run: |
           make test
