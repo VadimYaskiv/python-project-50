@@ -22,6 +22,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           poetry lock --no-update
+          make install
       - name: Run linter and pytest
         run: |
           make test
