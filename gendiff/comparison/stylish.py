@@ -1,19 +1,34 @@
+
+
+
 import itertools
 
+def signer(key, val):
+    rez_list = ''
+    if val['status'] == 'added':
+        val_loc = val['second_val']
+        rez_list = (f'+ {key}: {val_loc}')
+    elif val['status'] == 'deleted':
+        val_loc = val['first_val']
+        rez_list = (f'- {key}: {val_loc}')
+    elif val['status'] == 'unchanged':
+        val_loc = val['first_val']
+        rez_list = (f'  {key}: {val_loc}')
+    elif val['status'] == 'changed':
+        val_loc1 = val['first_val']
+        val_loc2 = val['second_val']
+        rez_list = (f'- {key}: {val_loc1}\n+ {key}: {val_loc2}')
+    return rez_list
+
 def stringify(value, replacer='.', spaces_count=4):
-
-    def iter_(current_value, depth):
-        if not isinstance(current_value, dict):
-            return str(current_value)
-
-        deep_indent_size = depth + spaces_count
-        deep_indent = replacer * (deep_indent_size - 2)
-        bracket_indent = replacer * depth
-        lines = []
-        for key, val in current_value.items():
-            lines.append(f'{deep_indent}{key}: {iter_(val, deep_indent_size)}')            
-        result = itertools.chain("{", lines, [bracket_indent + "}"])
-        return '\n'.join(result)
-
-    return iter_(value, 0)
+    lines = []
+    for key, val in value.items():
+         if 'status' in val:
+             lin = signer(key, val)
+             lines.append(lin)
+         else:
+            vald = stringify(val)
+            lines.append(f'{key}: {vald}')
+       
+    return '\n'.join(lines)
 

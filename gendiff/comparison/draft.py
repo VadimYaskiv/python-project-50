@@ -1,8 +1,7 @@
-from gendiff.comparison.file_parser import json_open
-from gendiff.comparison.file_parser import yaml_open
-from gendiff.comparison.stylish import stringify
+dict1 = {"hello": "world", "is": True, "nested": {"count": 55}, "rr": "rr", "bobr": {"hhh": 55}}
 
-# define the keys states
+dict2 = {"hello": "wor", "is": True, "nested": {"count": 5}, "ff": "ff"}
+
 def key_state_define(dict1, dict2):
     keys = dict1.keys() | dict2.keys()
     keys = sorted(keys)
@@ -35,19 +34,26 @@ def key_state_define(dict1, dict2):
             rez[key] = key_dict
     return rez
 
-# read files as dictionaries and define their keys states
-def generate_diff(path1, path2):
-    if '.json' in path1:
-        open_file1 = json_open(path1)
-    if '.json' in path2:
-        open_file2 = json_open(path2)
-    if '.yaml' or '.yml' in path1:
-        open_file1 = yaml_open(path1)
-    if '.yaml' or '.yml' in path2:
-        open_file2 = yaml_open(path2)
-    dict1 = dict(sorted(open_file1.items()))
-    dict2 = dict(sorted(open_file2.items()))  
-    internal_dict = key_state_define(dict1, dict2)
-    string_represent = stringify(internal_dict)
-    return string_represent
 
+print(key_state_define(dict1, dict2))
+
+import itertools
+
+def stringify(value, replacer='.', spaces_count=4):
+
+    def iter_(current_value, depth):
+        if not isinstance(current_value, dict):
+            return str(current_value)
+
+        deep_indent_size = depth + spaces_count
+        deep_indent = replacer * (deep_indent_size - 2)
+        bracket_indent = replacer * depth
+        lines = []
+        for key, val in current_value.items():
+            lines.append(f'{deep_indent}{key}: {iter_(val, deep_indent_size)}')            
+        result = itertools.chain("{", lines, [bracket_indent + "}"])
+        return '\n'.join(result)
+
+    return iter_(value, 0)
+
+print(stringify(data))
