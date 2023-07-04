@@ -14,3 +14,6 @@
 
 ### asciinema. step 5. flat yaml files comparison
 <a href="https://asciinema.org/a/FiaOKmKhzkbT7LUwd9mR1G1Pa" target="_blank"><img src="https://asciinema.org/a/FiaOKmKhzkbT7LUwd9mR1G1Pa.svg" /></a>
+
+### asciinema. step 6. recursive file comparison and output of result
+<a href="https://asciinema.org/a/4FyOgDgBXDM084L16SuSvWv0s" target="_blank"><img src="https://asciinema.org/a/4FyOgDgBXDM084L16SuSvWv0s.svg" /></a>

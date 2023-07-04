@@ -2,6 +2,7 @@ from gendiff.comparison.file_parser import json_open
 from gendiff.comparison.file_parser import yaml_open
 from gendiff.comparison.stylish import stringify
 
+
 # define the keys states
 def key_state_define(dict1, dict2):
     keys = dict1.keys() | dict2.keys()
@@ -35,7 +36,11 @@ def key_state_define(dict1, dict2):
             rez[key] = key_dict
     return rez
 
-# read files as dictionaries and define their keys states
+
+# read files as dictionaries,
+# call the function to create an internal dictionary 
+# with the identified parameters of the keys,
+# call the formatter
 def generate_diff(path1, path2):
     if '.json' in path1:
         open_file1 = json_open(path1)
@@ -46,8 +51,9 @@ def generate_diff(path1, path2):
     if '.yaml' or '.yml' in path2:
         open_file2 = yaml_open(path2)
     dict1 = dict(sorted(open_file1.items()))
-    dict2 = dict(sorted(open_file2.items()))  
+    dict2 = dict(sorted(open_file2.items()))
     internal_dict = key_state_define(dict1, dict2)
     string_represent = stringify(internal_dict)
     return string_represent
+
 
