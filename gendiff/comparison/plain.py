@@ -27,5 +27,3 @@ def stringify(value):
     return iter_(value, [])
 
 print(stringify(dict))
-
-
