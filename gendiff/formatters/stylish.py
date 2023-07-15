@@ -53,7 +53,7 @@ def signer(key, val, spaces_count, depth):
 
 # recursively unpack internal dictionary (with parameters of keys) 
 # and call еру function to define the signs
-def stringify(value, replacer=' ', spaces_count=4):
+def stringify_s(value, replacer=' ', spaces_count=4):
     def iter_(current_value, depth):
         lines = []
         deep_indent_size = depth + spaces_count
