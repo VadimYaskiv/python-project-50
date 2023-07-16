@@ -43,7 +43,7 @@ def key_state_define(dict1, dict2):
 # call the function to create an internal dictionary
 # with the identified parameters of the keys,
 # call the formatter
-def generate_diff(path1, path2, format):
+def generate_diff(path1, path2, format='stylish'):
     if '.json' in path1:
         open_file1 = json_open(path1)
     if '.json' in path2:
