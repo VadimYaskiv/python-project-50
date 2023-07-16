@@ -13,7 +13,8 @@ def unpacker(val, spaces_count, depth):
     if isinstance(val, dict):
         for key, val in val.items():
             rez.append(
-                f'{deep_indent}{key}: {unpacker(val, spaces_count, deep_indent_size)}'
+                f'{deep_indent}{key}: '
+                f'{unpacker(val, spaces_count, deep_indent_size)}'
                 )
             result = itertools.chain("{", rez, [bracket_indent + "}"])
     else:
@@ -44,14 +45,15 @@ def signer(key, val, spaces_count, depth):
         val_loc = unpacker(val['first_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}  {key}: {val_loc}')
     elif val['status'] == 'changed':
-        val_loc1 = unpacker(val['first_val'], 
+        val_loc1 = unpacker(val['first_val'],
                             spaces_count, deep_indent_size)
         val_loc2 = unpacker(val['second_val'], spaces_count, deep_indent_size)
-        rez_list = (f'{deep_indent}- {key}: {val_loc1}\n{deep_indent}+ {key}: {val_loc2}')
+        rez_list = (f'{deep_indent}- {key}: '
+                    f'{val_loc1}\n{deep_indent}+ {key}: {val_loc2}')
     return rez_list
 
 
-# recursively unpack internal dictionary (with parameters of keys) 
+# recursively unpack internal dictionary (with parameters of keys)
 # and call еру function to define the signs
 def stringify_s(value, replacer=' ', spaces_count=4):
     def iter_(current_value, depth):
@@ -64,7 +66,8 @@ def stringify_s(value, replacer=' ', spaces_count=4):
                 lin = signer(key, val, spaces_count, deep_indent_size)
                 lines.append(f'{lin}')
             else:
-                lines.append(f'{first_indent}{key}: {iter_(val, deep_indent_size)}')
+                lines.append(f'{first_indent}{key}: '
+                             f'{iter_(val, deep_indent_size)}')
         result = itertools.chain("{", lines, [bracket_indent + "}"])
         return '\n'.join(result)
     return iter_(value, 0)

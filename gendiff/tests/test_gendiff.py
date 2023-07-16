@@ -15,7 +15,7 @@ def test_generate_diff():
             'gendiff/yaml_files/file1.yaml',
             'gendiff/yaml_files/file2.yaml', 'stylish'
         ) == result
-        
+
     links_path = 'gendiff/tests/fixtures/result_plain.txt'
     with open(links_path, 'r') as f:
         result = f.read()

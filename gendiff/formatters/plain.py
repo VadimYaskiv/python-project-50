@@ -15,12 +15,13 @@ def signer(val):
         val_loc = adapt(val['second_val'])
         rez_list = (f"was added with value: {val_loc}")
     elif val['status'] == 'deleted':
-        rez_list = (f'was removed')
+        rez_list = 'was removed'
     elif val['status'] == 'changed':
-        val_loc1 = adapt(val['first_val']) 
+        val_loc1 = adapt(val['first_val'])
         val_loc2 = adapt(val['second_val'])
         rez_list = (f'was updated. From {val_loc1} to {val_loc2}')
     return rez_list
+
 
 def stringify_p(value):
     def iter_(current_value, path):

@@ -40,7 +40,7 @@ def key_state_define(dict1, dict2):
 
 
 # read files as dictionaries,
-# call the function to create an internal dictionary 
+# call the function to create an internal dictionary
 # with the identified parameters of the keys,
 # call the formatter
 def generate_diff(path1, path2, format):
@@ -56,7 +56,7 @@ def generate_diff(path1, path2, format):
     dict2 = dict(sorted(open_file2.items()))
     internal_dict = key_state_define(dict1, dict2)
     if format == 'stylish':
-        string_represent = stringify_s(internal_dict)        
+        string_represent = stringify_s(internal_dict)
     elif format == 'plain':
         string_represent = stringify_p(internal_dict)
     elif format == 'json':
