@@ -17,3 +17,6 @@
 
 ### asciinema. step 6. recursive file comparison and output of result
 <a href="https://asciinema.org/a/4FyOgDgBXDM084L16SuSvWv0s" target="_blank"><img src="https://asciinema.org/a/4FyOgDgBXDM084L16SuSvWv0s.svg" /></a>
+
+### asciinema. step 7. plain format output
+<a href="https://asciinema.org/a/aPs39Q5BpRgqABD8S9oi6h4Ar" target="_blank"><img src="https://asciinema.org/a/aPs39Q5BpRgqABD8S9oi6h4Ar.svg" /></a>
