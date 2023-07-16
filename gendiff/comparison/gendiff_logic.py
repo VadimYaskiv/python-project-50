@@ -2,6 +2,7 @@ from gendiff.comparison.file_parser import json_open
 from gendiff.comparison.file_parser import yaml_open
 from gendiff.formatters.stylish import stringify_s
 from gendiff.formatters.plain import stringify_p
+from gendiff.formatters.json import stringify_j
 
 
 # define the keys states
@@ -54,9 +55,10 @@ def generate_diff(path1, path2, format):
     dict1 = dict(sorted(open_file1.items()))
     dict2 = dict(sorted(open_file2.items()))
     internal_dict = key_state_define(dict1, dict2)
-    if format == 'plain':
+    if format == 'stylish':
+        string_represent = stringify_s(internal_dict)        
+    elif format == 'plain':
         string_represent = stringify_p(internal_dict)
-    else:
-        string_represent = stringify_s(internal_dict)
+    elif format == 'json':
+        string_represent = stringify_j(internal_dict)
     return string_represent
-

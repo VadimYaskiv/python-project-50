@@ -2,30 +2,44 @@ from gendiff.comparison.gendiff_logic import generate_diff
 
 
 def test_generate_diff():
-    links_path = 'gendiff/tests/fixtures/rezult_stylish.txt'
+    links_path = 'gendiff/tests/fixtures/result_stylish.txt'
     with open(links_path, 'r') as f:
-        rezult = f.read()
+        result = f.read()
 
         assert generate_diff(
             'gendiff/json_files/file1.json',
             'gendiff/json_files/file2.json', 'stylish'
-        ) == rezult
+        ) == result
 
         assert generate_diff(
             'gendiff/yaml_files/file1.yaml',
             'gendiff/yaml_files/file2.yaml', 'stylish'
-        ) == rezult
+        ) == result
         
-    links_path = 'gendiff/tests/fixtures/rezult_plain.txt'
+    links_path = 'gendiff/tests/fixtures/result_plain.txt'
     with open(links_path, 'r') as f:
-        rezult = f.read()
+        result = f.read()
 
         assert generate_diff(
             'gendiff/json_files/file1.json',
             'gendiff/json_files/file2.json', 'plain'
-        ) == rezult
+        ) == result
 
         assert generate_diff(
             'gendiff/yaml_files/file1.yaml',
             'gendiff/yaml_files/file2.yaml', 'plain'
-        ) == rezult
+        ) == result
+
+    links_path = 'gendiff/tests/fixtures/result_json.txt'
+    with open(links_path, 'r') as f:
+        result = f.read()
+
+        assert generate_diff(
+            'gendiff/json_files/file1.json',
+            'gendiff/json_files/file2.json', 'json'
+        ) == result
+
+        assert generate_diff(
+            'gendiff/yaml_files/file1.yaml',
+            'gendiff/yaml_files/file2.yaml', 'json'
+        ) == result
