@@ -1,1 +1,4 @@
 /.venv/
+/dist/
+/gendiff/__pycache__
+/myenv/
