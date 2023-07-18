@@ -15,7 +15,7 @@ def unpacker(val, spaces_count, depth):
             rez.append(
                 f'{deep_indent}{key}: '
                 f'{unpacker(val, spaces_count, deep_indent_size)}'
-                )
+            )
             result = itertools.chain("{", rez, [bracket_indent + "}"])
     else:
         if val is True or val is False:
