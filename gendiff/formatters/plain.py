@@ -5,6 +5,8 @@ def adapt(value):
         return str(value).lower()
     elif value is None:
         return 'null'
+    elif isinstance(value, int) or isinstance(value, float):
+        return f"{value}"
     else:
         return f"'{value}'"
 
