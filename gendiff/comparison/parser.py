@@ -7,9 +7,11 @@ def get_data(file_path):
     data = open(file_path)
     return data
 
+
 def get_extent(file_path):
     extension = os.path.splitext(file_path)[1]
     return extension
+
 
 def parse(data, extens):
     if extens == '.json':
