@@ -1,5 +1,6 @@
-from gendiff.comparison.file_parser import json_open
-from gendiff.comparison.file_parser import yaml_open
+from gendiff.comparison.parser import get_data
+from gendiff.comparison.parser import get_extent
+from gendiff.comparison.parser import parse
 from gendiff.formatters.stylish import stringify_s
 from gendiff.formatters.plain import stringify_p
 from gendiff.formatters.json import stringify_j
@@ -44,16 +45,15 @@ def key_state_define(dict1, dict2):
 # with the identified parameters of the keys,
 # call the formatter
 def generate_diff(path1, path2, format='stylish'):
-    if '.json' in path1:
-        open_file1 = json_open(path1)
-    if '.json' in path2:
-        open_file2 = json_open(path2)
-    if '.yaml' or '.yml' in path1:
-        open_file1 = yaml_open(path1)
-    if '.yaml' or '.yml' in path2:
-        open_file2 = yaml_open(path2)
-    dict1 = dict(sorted(open_file1.items()))
-    dict2 = dict(sorted(open_file2.items()))
+    data1 = get_data(path1)
+    data2 = get_data(path2)
+    exten1 = get_extent(path1)
+    exten2 = get_extent(path2)
+    file1 = parse(data1, exten1)
+    file2 = parse(data2, exten2)
+
+    dict1 = dict(sorted(file1.items()))
+    dict2 = dict(sorted(file2.items()))
     internal_dict = key_state_define(dict1, dict2)
     if format == 'stylish':
         string_represent = stringify_s(internal_dict)
