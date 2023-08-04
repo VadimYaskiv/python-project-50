@@ -13,12 +13,12 @@ def adapt(value):
 
 def signer(val):
     rez_list = ''
-    if val['status'] == 'added':
+    if val['type'] == 'added':
         val_loc = adapt(val['second_val'])
         rez_list = (f"was added with value: {val_loc}")
-    elif val['status'] == 'deleted':
+    elif val['type'] == 'deleted':
         rez_list = 'was removed'
-    elif val['status'] == 'changed':
+    elif val['type'] == 'changed':
         val_loc1 = adapt(val['first_val'])
         val_loc2 = adapt(val['second_val'])
         rez_list = (f'was updated. From {val_loc1} to {val_loc2}')
@@ -29,9 +29,9 @@ def stringify_p(value):
     def iter_(current_value, path):
         lines = []
         for key, val in current_value.items():
-            if val.get('status') == 'unchanged':
+            if val.get('type') == 'unchanged':
                 continue
-            elif 'status' in val and val.get('status') != 'unchanged':
+            elif 'type' in val and val.get('type') != 'unchanged':
                 lin = signer(val)
                 path.append(key)
                 lines.append(f"Property '{'.'.join(path)}' {lin}")

@@ -18,22 +18,22 @@ def key_state_define(dict1, dict2):
             rez[key] = key_state_define(value1, value2)
         elif key not in dict1:
             key_dict = {}
-            key_dict['status'] = 'added'
+            key_dict['type'] = 'added'
             key_dict['second_val'] = value2
             rez[key] = key_dict
         elif key not in dict2:
             key_dict = {}
-            key_dict['status'] = 'deleted'
+            key_dict['type'] = 'deleted'
             key_dict['first_val'] = value1
             rez[key] = key_dict
         elif dict1[key] == dict2[key]:
             key_dict = {}
-            key_dict['status'] = 'unchanged'
+            key_dict['type'] = 'unchanged'
             key_dict['first_val'] = value1
             rez[key] = key_dict
         elif dict1[key] != dict2[key]:
             key_dict = {}
-            key_dict['status'] = 'changed'
+            key_dict['type'] = 'changed'
             key_dict['first_val'] = value1
             key_dict['second_val'] = value2
             rez[key] = key_dict
