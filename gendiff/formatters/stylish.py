@@ -5,16 +5,16 @@ import itertools
 # and don't have 'type' because 'type' is defined
 # for the dictionary at the level above
 # (which has the keys 'first_val' and 'second_val')
-def unpacker(val, depth):
+def unpacker(val, spaces_count, depth):
     rez = []
-    deep_indent_size = depth + 4
+    deep_indent_size = depth + spaces_count
     deep_indent = ' ' * deep_indent_size
     bracket_indent = ' ' * depth
     if isinstance(val, dict):
         for key, val in val.items():
             rez.append(
                 f'{deep_indent}{key}: '
-                f'{unpacker(val, deep_indent_size)}'
+                f'{unpacker(val, spaces_count, deep_indent_size)}'
             )
             result = itertools.chain("{", rez, [bracket_indent + "}"])
     else:
@@ -31,23 +31,23 @@ def unpacker(val, depth):
 
 
 # define the signs for keys according to the 'type'
-def signer(key, val, depth):
+def signer(key, val, spaces_count, depth):
     rez_list = ''
     deep_indent_size = depth
     deep_indent = ' ' * (deep_indent_size - 2)
     if val['type'] == 'added':
-        val_loc = unpacker(val['second_val'], deep_indent_size)
+        val_loc = unpacker(val['second_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}+ {key}: {val_loc}')
     elif val['type'] == 'deleted':
-        val_loc = unpacker(val['first_val'], deep_indent_size)
+        val_loc = unpacker(val['first_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}- {key}: {val_loc}')
     elif val['type'] == 'unchanged':
-        val_loc = unpacker(val['first_val'], deep_indent_size)
+        val_loc = unpacker(val['first_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}  {key}: {val_loc}')
     elif val['type'] == 'changed':
         val_loc1 = unpacker(val['first_val'],
-                            deep_indent_size)
-        val_loc2 = unpacker(val['second_val'], deep_indent_size)
+                            spaces_count, deep_indent_size)
+        val_loc2 = unpacker(val['second_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}- {key}: '
                     f'{val_loc1}\n{deep_indent}+ {key}: {val_loc2}')
     return rez_list
@@ -55,15 +55,15 @@ def signer(key, val, depth):
 
 # recursively unpack internal dictionary (with parameters of keys)
 # and call еру function to define the signs
-def stringify_s(value, replacer=' '):
+def stringify_s(value, replacer=' ', spaces_count=4):
     def iter_(current_value, depth):
         lines = []
-        deep_indent_size = depth + 4
+        deep_indent_size = depth + spaces_count
         first_indent = replacer * deep_indent_size
         bracket_indent = replacer * depth
         for key, val in current_value.items():
             if 'type' in val:
-                lin = signer(key, val, deep_indent_size)
+                lin = signer(key, val, spaces_count, deep_indent_size)
                 lines.append(f'{lin}')
             else:
                 lines.append(f'{first_indent}{key}: '
