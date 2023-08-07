@@ -1,28 +1,28 @@
 {
   "common": {
     "follow": {
-      "status": "added",
+      "type": "added",
       "second_val": false
     },
     "setting1": {
-      "status": "unchanged",
+      "type": "unchanged",
       "first_val": "Value 1"
     },
     "setting2": {
-      "status": "deleted",
+      "type": "deleted",
       "first_val": 200
     },
     "setting3": {
-      "status": "changed",
+      "type": "changed",
       "first_val": true,
       "second_val": null
     },
     "setting4": {
-      "status": "added",
+      "type": "added",
       "second_val": "blah blah"
     },
     "setting5": {
-      "status": "added",
+      "type": "added",
       "second_val": {
         "key5": "value5"
       }
@@ -30,33 +30,33 @@
     "setting6": {
       "doge": {
         "wow": {
-          "status": "changed",
+          "type": "changed",
           "first_val": "",
           "second_val": "so much"
         }
       },
       "key": {
-        "status": "unchanged",
+        "type": "unchanged",
         "first_val": "value"
       },
       "ops": {
-        "status": "added",
+        "type": "added",
         "second_val": "vops"
       }
     }
   },
   "group1": {
     "baz": {
-      "status": "changed",
+      "type": "changed",
       "first_val": "bas",
       "second_val": "bars"
     },
     "foo": {
-      "status": "unchanged",
+      "type": "unchanged",
       "first_val": "bar"
     },
     "nest": {
-      "status": "changed",
+      "type": "changed",
       "first_val": {
         "key": "value"
       },
@@ -64,7 +64,7 @@
     }
   },
   "group2": {
-    "status": "deleted",
+    "type": "deleted",
     "first_val": {
       "abc": 12345,
       "deep": {
@@ -73,7 +73,7 @@
     }
   },
   "group3": {
-    "status": "added",
+    "type": "added",
     "second_val": {
       "deep": {
         "id": {
