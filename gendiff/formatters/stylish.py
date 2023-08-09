@@ -5,7 +5,7 @@ import itertools
 # and don't have 'status' because 'status' is defined
 # for the dictionary at the level above
 # (which has the keys 'first_val' and 'second_val')
-def unpacker(val, depth):
+def unpack(val, depth):
     rez = []
     deep_indent_size = depth + 4
     deep_indent = ' ' * deep_indent_size
@@ -14,7 +14,7 @@ def unpacker(val, depth):
         for key, val in val.items():
             rez.append(
                 f'{deep_indent}{key}: '
-                f'{unpacker(val, deep_indent_size)}'
+                f'{unpack(val, deep_indent_size)}'
             )
             result = itertools.chain("{", rez, [bracket_indent + "}"])
     else:
@@ -36,17 +36,17 @@ def signer(key, val, depth):
     deep_indent_size = depth
     deep_indent = ' ' * (deep_indent_size - 2)
     if val['status'] == 'added':
-        val_loc = unpacker(val['second_val'], deep_indent_size)
+        val_loc = unpack(val['second_val'], deep_indent_size)
         rez_list = (f'{deep_indent}+ {key}: {val_loc}')
     elif val['status'] == 'deleted':
-        val_loc = unpacker(val['first_val'], deep_indent_size)
+        val_loc = unpack(val['first_val'], deep_indent_size)
         rez_list = (f'{deep_indent}- {key}: {val_loc}')
     elif val['status'] == 'unchanged':
-        val_loc = unpacker(val['first_val'], deep_indent_size)
+        val_loc = unpack(val['first_val'], deep_indent_size)
         rez_list = (f'{deep_indent}  {key}: {val_loc}')
     elif val['status'] == 'changed':
-        val_loc1 = unpacker(val['first_val'], deep_indent_size)
-        val_loc2 = unpacker(val['second_val'], deep_indent_size)
+        val_loc1 = unpack(val['first_val'], deep_indent_size)
+        val_loc2 = unpack(val['second_val'], deep_indent_size)
         rez_list = (f'{deep_indent}- {key}: '
                     f'{val_loc1}\n{deep_indent}+ {key}: {val_loc2}')
     return rez_list
