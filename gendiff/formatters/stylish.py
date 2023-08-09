@@ -2,7 +2,7 @@ import itertools
 
 
 # unpack dictionaries that are in 'first_val' and 'second_val'
-# and don't have 'type' because 'type' is defined
+# and don't have 'status' because 'status' is defined
 # for the dictionary at the level above
 # (which has the keys 'first_val' and 'second_val')
 def unpacker(val, spaces_count, depth):
@@ -30,21 +30,21 @@ def unpacker(val, spaces_count, depth):
     return '\n'.join(result)
 
 
-# define the signs for keys according to the 'type'
+# define the signs for keys according to the 'status'
 def signer(key, val, spaces_count, depth):
     rez_list = ''
     deep_indent_size = depth
     deep_indent = ' ' * (deep_indent_size - 2)
-    if val['type'] == 'added':
+    if val['status'] == 'added':
         val_loc = unpacker(val['second_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}+ {key}: {val_loc}')
-    elif val['type'] == 'deleted':
+    elif val['status'] == 'deleted':
         val_loc = unpacker(val['first_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}- {key}: {val_loc}')
-    elif val['type'] == 'unchanged':
+    elif val['status'] == 'unchanged':
         val_loc = unpacker(val['first_val'], spaces_count, deep_indent_size)
         rez_list = (f'{deep_indent}  {key}: {val_loc}')
-    elif val['type'] == 'changed':
+    elif val['status'] == 'changed':
         val_loc1 = unpacker(val['first_val'],
                             spaces_count, deep_indent_size)
         val_loc2 = unpacker(val['second_val'], spaces_count, deep_indent_size)
@@ -62,7 +62,7 @@ def stringify_s(value, replacer=' ', spaces_count=4):
         first_indent = replacer * deep_indent_size
         bracket_indent = replacer * depth
         for key, val in current_value.items():
-            if 'type' in val:
+            if 'status' in val:
                 lin = signer(key, val, spaces_count, deep_indent_size)
                 lines.append(f'{lin}')
             else:
