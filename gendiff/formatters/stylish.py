@@ -31,7 +31,7 @@ def unpack(val, depth):
 
 
 # define the signs for keys according to the 'status'
-def signer(key, val, depth):
+def sign(key, val, depth):
     rez_list = ''
     deep_indent_size = depth
     deep_indent = ' ' * (deep_indent_size - 2)
@@ -62,7 +62,7 @@ def stringify_s(value, replacer=' '):
         bracket_indent = replacer * depth
         for key, val in current_value.items():
             if 'status' in val:
-                lin = signer(key, val, deep_indent_size)
+                lin = sign(key, val, deep_indent_size)
                 lines.append(f'{lin}')
             else:
                 lines.append(f'{first_indent}{key}: '
