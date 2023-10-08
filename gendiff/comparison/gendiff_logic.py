@@ -8,8 +8,7 @@ from gendiff.formatters.json import stringify_j
 
 # define the keys states
 def key_state_define(dict1, dict2):
-    keys = dict1.keys() | dict2.keys()
-    keys = sorted(keys)
+    keys = sorted(dict1.keys() | dict2.keys())
     rez = {}
     for key in keys:
         value1 = dict1.get(key)
@@ -17,26 +16,18 @@ def key_state_define(dict1, dict2):
         if isinstance(value1, dict) and isinstance(value2, dict):
             rez[key] = key_state_define(value1, value2)
         elif key not in dict1:
-            key_dict = {}
-            key_dict['status'] = 'added'
-            key_dict['second_val'] = value2
-            rez[key] = key_dict
+            rez[key] = {'status': 'added',
+                        'second_val': dict2[key]}
         elif key not in dict2:
-            key_dict = {}
-            key_dict['status'] = 'deleted'
-            key_dict['first_val'] = value1
-            rez[key] = key_dict
+            rez[key] = {'status': 'deleted',
+                        'first_val': dict1[key]}
         elif dict1[key] == dict2[key]:
-            key_dict = {}
-            key_dict['status'] = 'unchanged'
-            key_dict['first_val'] = value1
-            rez[key] = key_dict
+            rez[key] = {'status': 'unchanged',
+                        'first_val': dict1[key]}
         elif dict1[key] != dict2[key]:
-            key_dict = {}
-            key_dict['status'] = 'changed'
-            key_dict['first_val'] = value1
-            key_dict['second_val'] = value2
-            rez[key] = key_dict
+            rez[key] = {'status': 'changed',
+                        'first_val': dict1[key],
+                        'second_val': dict2[key]}
     return rez
 
 
