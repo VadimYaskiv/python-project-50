@@ -23,8 +23,8 @@ def key_state_define(dict1, dict2):
     keys = sorted(dict1.keys() | dict2.keys())
     rez = {}
     for key in keys:
-        if (isinstance(dict1.get(key), dict) and
-                isinstance(dict2.get(key), dict)):
+        if (isinstance(dict1.get(key), dict)
+                and isinstance(dict2.get(key), dict)):
             child = key_state_define(dict1[key], dict2[key])
             rez[key] = {'type': 'nested',
                         'value': child}

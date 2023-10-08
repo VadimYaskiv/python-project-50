@@ -32,11 +32,11 @@ def stylish(dict, replacer='  ', depth=1):
             line.append(stylish(val['value'], replacer, depth + 2))
             line.append(replacer * (depth + 1) + '}' + '\n')
         elif val['type'] == 'changed':
-            line.append(indent + '- ' + str(key) + ': ' +
-                        str(unpack(val['first_val'], replacer, depth + 2))
+            line.append(indent + '- ' + str(key) + ': '
+                        + str(unpack(val['first_val'], replacer, depth + 2))
                         + '\n')
-            line.append(indent + '+ ' + str(key) + ': ' +
-                        str(unpack(val['second_val'], replacer, depth + 2))
+            line.append(indent + '+ ' + str(key) + ': '
+                        + str(unpack(val['second_val'], replacer, depth + 2))
                         + '\n')
         else:
             line.append(indent + SIGN[val['type']] + str(key)
