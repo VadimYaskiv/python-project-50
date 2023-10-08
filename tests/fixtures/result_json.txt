@@ -1,53 +1,53 @@
 {
   "common": {
-    "status": "nested",
+    "type": "nested",
     "value": {
       "follow": {
-        "status": "added",
+        "type": "added",
         "value": "false"
       },
       "setting1": {
-        "status": "unchanged",
+        "type": "unchanged",
         "value": "Value 1"
       },
       "setting2": {
-        "status": "deleted",
+        "type": "deleted",
         "value": 200
       },
       "setting3": {
-        "status": "changed",
+        "type": "changed",
         "first_val": "true",
         "second_val": "null"
       },
       "setting4": {
-        "status": "added",
+        "type": "added",
         "value": "blah blah"
       },
       "setting5": {
-        "status": "added",
+        "type": "added",
         "value": {
           "key5": "value5"
         }
       },
       "setting6": {
-        "status": "nested",
+        "type": "nested",
         "value": {
           "doge": {
-            "status": "nested",
+            "type": "nested",
             "value": {
               "wow": {
-                "status": "changed",
+                "type": "changed",
                 "first_val": "",
                 "second_val": "so much"
               }
             }
           },
           "key": {
-            "status": "unchanged",
+            "type": "unchanged",
             "value": "value"
           },
           "ops": {
-            "status": "added",
+            "type": "added",
             "value": "vops"
           }
         }
@@ -55,19 +55,19 @@
     }
   },
   "group1": {
-    "status": "nested",
+    "type": "nested",
     "value": {
       "baz": {
-        "status": "changed",
+        "type": "changed",
         "first_val": "bas",
         "second_val": "bars"
       },
       "foo": {
-        "status": "unchanged",
+        "type": "unchanged",
         "value": "bar"
       },
       "nest": {
-        "status": "changed",
+        "type": "changed",
         "first_val": {
           "key": "value"
         },
@@ -76,7 +76,7 @@
     }
   },
   "group2": {
-    "status": "deleted",
+    "type": "deleted",
     "value": {
       "abc": 12345,
       "deep": {
@@ -85,7 +85,7 @@
     }
   },
   "group3": {
-    "status": "added",
+    "type": "added",
     "value": {
       "deep": {
         "id": {

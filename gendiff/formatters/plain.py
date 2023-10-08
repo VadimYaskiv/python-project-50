@@ -1,4 +1,3 @@
-
 def unpack(value=''):
     if isinstance(value, dict):
         return '[complex value]'
@@ -8,25 +7,26 @@ def unpack(value=''):
         return f"{value}"
 
 
-
+# form the lines of the final file depending on the type
+# if type is nested than recursively unpack values of internal dictionary
 def stringify_p(internal_dict, path=""):
     result = []
     for key, val in internal_dict.items():
         param = f"{path}{key}"
 
-        if val['status'] == 'added':
+        if val['type'] == 'added':
             result.append(f"Property '{param}' "
-                f"was added with value: {unpack(val['value'])}"
-            )
+                          f"was added with value: {unpack(val['value'])}"
+                          )
 
-        if val['status'] == 'deleted':
+        if val['type'] == 'deleted':
             result.append(f"Property '{param}' was removed")
 
-        if val['status'] == 'nested':
+        if val['type'] == 'nested':
             new_value = stringify_p(val['value'], f"{param}.")
             result.append(f"{new_value}")
 
-        if val['status'] == 'changed':
+        if val['type'] == 'changed':
             result.append(
                 f"Property '{param}' was updated. "
                 f"From {unpack(val['first_val'])} to "

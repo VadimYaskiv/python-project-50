@@ -6,6 +6,8 @@ from gendiff.formatters.plain import stringify_p
 from gendiff.formatters.json import stringify_j
 
 
+# change the values that are not int or str
+# to format the task requires
 def normalize(dict_):
     corr_values = {None: 'null', True: 'true', False: 'false'}
     for key, val in dict_.items():
@@ -15,26 +17,28 @@ def normalize(dict_):
             dict_[key] = corr_values[val]
     return dict_
 
+
 # define the keys states
 def key_state_define(dict1, dict2):
     keys = sorted(dict1.keys() | dict2.keys())
     rez = {}
     for key in keys:
-        if isinstance(dict1.get(key), dict) and isinstance(dict2.get(key), dict):
+        if (isinstance(dict1.get(key), dict) and
+                isinstance(dict2.get(key), dict)):
             child = key_state_define(dict1[key], dict2[key])
-            rez[key] = {'status': 'nested',
-                            'value': child}
+            rez[key] = {'type': 'nested',
+                        'value': child}
         elif key not in dict1:
-            rez[key] = {'status': 'added',
+            rez[key] = {'type': 'added',
                         'value': dict2[key]}
         elif key not in dict2:
-            rez[key] = {'status': 'deleted',
+            rez[key] = {'type': 'deleted',
                         'value': dict1[key]}
         elif dict1[key] == dict2[key]:
-            rez[key] = {'status': 'unchanged',
+            rez[key] = {'type': 'unchanged',
                         'value': dict1[key]}
         elif dict1[key] != dict2[key]:
-            rez[key] = {'status': 'changed',
+            rez[key] = {'type': 'changed',
                         'first_val': dict1[key],
                         'second_val': dict2[key]}
     return rez
@@ -43,7 +47,7 @@ def key_state_define(dict1, dict2):
 # read files as dictionaries,
 # call the function to create an internal dictionary
 # with the identified parameters of the keys,
-# call the formatter
+# call the formatter depend on format
 def generate_diff(path1, path2, format='stylish'):
     data1 = get_data(path1)
     data2 = get_data(path2)
