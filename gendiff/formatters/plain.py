@@ -1,44 +1,37 @@
-def adapt(value):
+
+def unpack(value=''):
     if isinstance(value, dict):
         return '[complex value]'
-    elif value is True or value is False:
-        return str(value).lower()
-    elif value is None:
-        return 'null'
-    elif isinstance(value, int) or isinstance(value, float):
-        return f"{value}"
-    else:
+    elif value not in ['false', 'true', 'null'] and isinstance(value, str):
         return f"'{value}'"
+    else:
+        return f"{value}"
 
 
-def signer(val):
-    rez_list = ''
-    if val['status'] == 'added':
-        val_loc = adapt(val['second_val'])
-        rez_list = (f"was added with value: {val_loc}")
-    elif val['status'] == 'deleted':
-        rez_list = 'was removed'
-    elif val['status'] == 'changed':
-        val_loc1 = adapt(val['first_val'])
-        val_loc2 = adapt(val['second_val'])
-        rez_list = (f'was updated. From {val_loc1} to {val_loc2}')
-    return rez_list
 
+def stringify_p(internal_dict, path=""):
+    result = []
+    for key, val in internal_dict.items():
+        param = f"{path}{key}"
 
-def stringify_p(value):
-    def iter_(current_value, path):
-        lines = []
-        for key, val in current_value.items():
-            if val.get('status') == 'unchanged':
-                continue
-            elif 'status' in val and val.get('status') != 'unchanged':
-                lin = signer(val)
-                path.append(key)
-                lines.append(f"Property '{'.'.join(path)}' {lin}")
-                path.pop()
-            else:
-                path.append(key)
-                lines.append(f"{iter_(val, path)}")
-                path.pop()
-        return '\n'.join(lines)
-    return iter_(value, [])
+        if val['status'] == 'added':
+            result.append(f"Property '{param}' "
+                f"was added with value: {unpack(val['value'])}"
+            )
+
+        if val['status'] == 'deleted':
+            result.append(f"Property '{param}' was removed")
+
+        if val['status'] == 'nested':
+            new_value = stringify_p(val['value'], f"{param}.")
+            result.append(f"{new_value}")
+
+        if val['status'] == 'changed':
+            result.append(
+                f"Property '{param}' was updated. "
+                f"From {unpack(val['first_val'])} to "
+                f"{unpack(val['second_val'])}")
+
+    res = "\n".join(result)
+
+    return res

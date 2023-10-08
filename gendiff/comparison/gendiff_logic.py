@@ -6,24 +6,33 @@ from gendiff.formatters.plain import stringify_p
 from gendiff.formatters.json import stringify_j
 
 
+def normalize(dict_):
+    corr_values = {None: 'null', True: 'true', False: 'false'}
+    for key, val in dict_.items():
+        if isinstance(val, dict):
+            normalize(val)
+        elif isinstance(val, (bool, type(None))):
+            dict_[key] = corr_values[val]
+    return dict_
+
 # define the keys states
 def key_state_define(dict1, dict2):
     keys = sorted(dict1.keys() | dict2.keys())
     rez = {}
     for key in keys:
-        value1 = dict1.get(key)
-        value2 = dict2.get(key)
-        if isinstance(value1, dict) and isinstance(value2, dict):
-            rez[key] = key_state_define(value1, value2)
+        if isinstance(dict1.get(key), dict) and isinstance(dict2.get(key), dict):
+            child = key_state_define(dict1[key], dict2[key])
+            rez[key] = {'status': 'nested',
+                            'value': child}
         elif key not in dict1:
             rez[key] = {'status': 'added',
-                        'second_val': dict2[key]}
+                        'value': dict2[key]}
         elif key not in dict2:
             rez[key] = {'status': 'deleted',
-                        'first_val': dict1[key]}
+                        'value': dict1[key]}
         elif dict1[key] == dict2[key]:
             rez[key] = {'status': 'unchanged',
-                        'first_val': dict1[key]}
+                        'value': dict1[key]}
         elif dict1[key] != dict2[key]:
             rez[key] = {'status': 'changed',
                         'first_val': dict1[key],
@@ -43,8 +52,8 @@ def generate_diff(path1, path2, format='stylish'):
     file1 = parse(data1, exten1)
     file2 = parse(data2, exten2)
 
-    dict1 = dict(sorted(file1.items()))
-    dict2 = dict(sorted(file2.items()))
+    dict1 = normalize(dict(sorted(file1.items())))
+    dict2 = normalize(dict(sorted(file2.items())))
     internal_dict = key_state_define(dict1, dict2)
     if format == 'stylish':
         string_represent = stringify_s(internal_dict)
